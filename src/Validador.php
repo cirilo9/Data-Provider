@@ -18,4 +18,10 @@ class Validador
     {
         return $numero < 0;
     }
+
+    // Nueva función para validar si un campo está vacío
+    public function esVacio($valor)
+    {
+        return empty($valor);
+    }
 }

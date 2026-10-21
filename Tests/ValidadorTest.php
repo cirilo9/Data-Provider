@@ -36,6 +36,28 @@ class ValidadorTest extends TestCase
         ];
     }
 
+    // Nuevo proveedor para números negativos
+    public static function proveedorEsNegativo(): array
+    {
+        return [
+            [-10, true],
+            [0, false],
+            [5, false],
+            [-1, true],
+        ];
+    }
+
+    // Nuevo proveedor para campos vacíos
+    public static function proveedorEsVacio(): array
+    {
+        return [
+            ['', true],
+            [null, true],
+            ['Texto', false],
+            [' ', false], // Un espacio en blanco no es estrictamente vacío para empty()
+        ];
+    }
+
     // ================== PRUEBAS ==================
 
     #[DataProvider('proveedorEsPar')]
@@ -49,6 +71,22 @@ class ValidadorTest extends TestCase
     public function testEsPositivo($numero, $esperado)
     {
         $resultado = $this->validador->esPositivo($numero);
+        $this->assertEquals($esperado, $resultado);
+    }
+
+    // Nueva prueba para esNegativo
+    #[DataProvider('proveedorEsNegativo')]
+    public function testEsNegativo($numero, $esperado)
+    {
+        $resultado = $this->validador->esNegativo($numero);
+        $this->assertEquals($esperado, $resultado);
+    }
+
+    // Nueva prueba para esVacio
+    #[DataProvider('proveedorEsVacio')]
+    public function testEsVacio($valor, $esperado)
+    {
+        $resultado = $this->validador->esVacio($valor);
         $this->assertEquals($esperado, $resultado);
     }
 }
